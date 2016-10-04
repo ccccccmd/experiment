@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EFTest.Models;
+using EFTest.Quartz;
+using Quartz;
+using Quartz.Impl;
 
 namespace EFTest.Controllers
 {
@@ -53,6 +56,59 @@ namespace EFTest.Controllers
                 .SelectMany(p => p.c.DefaultIfEmpty(),
                     (c, d) => new { name = c.u.UserName, car = d == null ? "" : d.Name }).ToList();
 
+        }
+
+
+
+        public void Test2()
+        {
+            DbContext db = new DbContext();
+            var u = db.Userses.AsNoTracking().FirstOrDefault(x => x.Id == 4);
+            // var c = db.Carses.AsNoTracking().ToList() .Find(b=>b.Id== 16);
+            var c = db.Carses.Find(16);
+            Cars car = new Cars() { Name = "宝马" };
+            u.InterestCar = c;
+            db.SaveChanges();
+
+        }
+
+        public void Test3()
+        {
+            DbContext db = new DbContext();
+            var u = db.Userses.FirstOrDefault(x => x.Id == 4);
+            // var c = db.Carses.AsNoTracking().ToList() .Find(b=>b.Id== 16);
+
+            DbContext db1 = new DbContext();
+            var c = db1.Carses.Find(16);
+            Cars car = new Cars() { Name = "宝马" };
+            u.InterestCar = c;
+            db.SaveChanges();
+
+        }
+
+        public void Test4()
+        {
+
+            var user = new Users() { Id = 5, Age = 222, UserName = "test_admin", InterestCarId = 2 };
+
+            using (DbContext db = new DbContext())
+            {
+                db.Userses.Add(user);
+                db.SaveChanges();
+            }
+        }
+
+
+        public void QuartzTest()
+        {
+            StdSchedulerFactory sf = new StdSchedulerFactory();
+            var sc = sf.GetScheduler();
+            var job = JobBuilder.Create<TestJob>().WithIdentity("testjob", "group1").Build();
+            //var trigger = TriggerBuilder.Create().WithIdentity("trigger_test_job", "group1").WithSimpleSchedule(c => c.RepeatForever().WithIntervalInSeconds(20)).StartNow().Build();
+
+            var trigger = TriggerBuilder.Create().WithIdentity("trigger_test_job", "group1").WithCronSchedule("10,20,30,40,50 16,20 * * * ? ").Build();
+            sc.ScheduleJob(job, trigger);
+            sc.Start();
         }
     }
 }
