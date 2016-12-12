@@ -14,10 +14,11 @@ namespace Cacheing
     {
 
 
-        private static readonly MemcachedClient Client;
+        public static readonly MemcachedClient Client;
+
         static MemcachedHelper()
         {
-            MemcachedClientConfiguration config = new MemcachedClientConfiguration();
+            var config = new MemcachedClientConfiguration();
             config.Servers.Add(new IPEndPoint(IPAddress.Parse("192.168.12.123"), 11211));
             config.Protocol = MemcachedProtocol.Binary;
             //config.Authentication.Type = typeof(PlainTextAuthenticator);
@@ -25,23 +26,9 @@ namespace Cacheing
             //config.Authentication.Parameters["password"] = "demo";
 
             Client = new MemcachedClient(config);
-
-
-            
         }
 
-        public static bool  Store()
-        {
-            return Client.Store(StoreMode.Set ,);
-        }
-        public static bool Get()
-        {
-            return Client.Get();
-        }
-
-
-
-        public static bool Delete()
+        private MemcachedHelper()
         {
 
         }
