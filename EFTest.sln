@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperDemo", "DapperDemo\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartzTest", "QuartzTest\QuartzTest.csproj", "{ABC08AE0-AA72-4B51-A3ED-4CE27622232E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Con", "Redis.Con\Redis.Con.csproj", "{BA3AD010-5B58-42CA-9056-586DC049FD9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cacheing", "Cacheing\Cacheing.csproj", "{54A0D08D-AE67-4703-8D55-68C71C79F249}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{ABC08AE0-AA72-4B51-A3ED-4CE27622232E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABC08AE0-AA72-4B51-A3ED-4CE27622232E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABC08AE0-AA72-4B51-A3ED-4CE27622232E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA3AD010-5B58-42CA-9056-586DC049FD9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA3AD010-5B58-42CA-9056-586DC049FD9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA3AD010-5B58-42CA-9056-586DC049FD9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA3AD010-5B58-42CA-9056-586DC049FD9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54A0D08D-AE67-4703-8D55-68C71C79F249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54A0D08D-AE67-4703-8D55-68C71C79F249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54A0D08D-AE67-4703-8D55-68C71C79F249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54A0D08D-AE67-4703-8D55-68C71C79F249}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Mail;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using EFTest.Models;
 using EFTest.Quartz;
 using Quartz;
 using Quartz.Impl;
+using ZXing;
+using ZXing.QrCode;
 
 namespace EFTest.Controllers
 {
@@ -36,7 +42,7 @@ namespace EFTest.Controllers
 
         }
 
-        public void Test()
+        public ActionResult Test()
         {
             DbContext db = new DbContext();
             //var x = from u in db.Userses
@@ -56,9 +62,32 @@ namespace EFTest.Controllers
                 .SelectMany(p => p.c.DefaultIfEmpty(),
                     (c, d) => new { name = c.u.UserName, car = d == null ? "" : d.Name }).ToList();
 
+            return View(obj2);
+
         }
 
+        public void TestInsert()
+        {
+            List<Cars> l = new List<Cars>();
+            for (int i = 0; i < 100; i++)
+            {
+                l.Add(new Cars() { Name = i.ToString() });
+            }
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            using (var db = new DbContext())
+            {
+                db.Configuration.AutoDetectChangesEnabled = false;
+                // db.Configuration.ValidateOnSaveEnabled = false;
+                db.Carses.AddRange(l);
+                db.SaveChanges();
+                db.Configuration.AutoDetectChangesEnabled = true;
+                //db.Configuration.ValidateOnSaveEnabled = true ;
 
+            }
+            sw.Stop();
+            var x = sw.ElapsedMilliseconds;
+        }
 
         public void Test2()
         {
@@ -106,9 +135,135 @@ namespace EFTest.Controllers
             var job = JobBuilder.Create<TestJob>().WithIdentity("testjob", "group1").Build();
             //var trigger = TriggerBuilder.Create().WithIdentity("trigger_test_job", "group1").WithSimpleSchedule(c => c.RepeatForever().WithIntervalInSeconds(20)).StartNow().Build();
 
-            var trigger = TriggerBuilder.Create().WithIdentity("trigger_test_job", "group1").WithCronSchedule("10,20,30,40,50 16,20 * * * ? ").Build();
+            var trigger =
+                TriggerBuilder.Create()
+                    .WithIdentity("trigger_test_job", "group1")
+                    .WithCronSchedule("10,20,30,40,50 16,20 * * * ? ")
+                    .Build();
             sc.ScheduleJob(job, trigger);
             sc.Start();
         }
+
+
+        public ActionResult TestEmail()
+        {
+            var msg = new MailMessage();
+            return View();
+        }
+
+        public ActionResult TestEmail2()
+        {
+            var mailMessage = new MailMessage { Subject = "aaaaaa " };
+            return View();
+        }
+
+
+        public void ListTest()
+        {
+
+
+            ThreadPool.QueueUserWorkItem(ce =>
+            {
+                var l = GetList();
+                while (true)
+                {
+                    var x = l.Where(c => c.Contains("bck")).ToList();
+                    Thread.Sleep(20);
+                }
+
+            });
+            Thread.Sleep(50);
+
+            ThreadPool.QueueUserWorkItem(ce =>
+            {
+                var l = GetList();
+                while (true)
+                {
+                    l.Add(Guid.NewGuid().ToString("N"));
+                    Thread.Sleep(20);
+                }
+            });
+        }
+        public void ListTest2()
+        {
+
+            var l = GetList();
+            var x = l.Where(c => c.Contains("bck")).ToList();
+            l.Add("bck");
+
+            var y = l.Where(c => c.Contains("bck")).ToList();
+
+        }
+
+        public List<string> GetList()
+        {
+            var key = "list_cache";
+
+            var list = HttpRuntime.Cache.Get(key) as List<string>;
+            if (list == null)
+            {
+                var l = new List<string>()
+                      {     "admin","root","mv","find","",
+                "admin","root","mv","find","",
+                "admin",
+                "root","mv","find","","admin",
+                "root","mv","find",""
+                   };
+
+                list = l;
+                HttpRuntime.Cache.Insert(key, list, null);
+            }
+
+            return list;
+        }
+
+
+        public void Test12()
+        {
+            int n = 1;
+            ++n;
+            int y = n++;
+        }
+
+
+        public void T()
+        {
+            DbContext db = new DbContext();
+
+            //var car = new Cars() { Id = 4 ,Name ="911"};
+            var car = db.Carses.FirstOrDefault(x => x.Id == 4);
+            var en = db.Entry(car);
+            car.Name = "918";
+            car.CreateTime = DateTime.Now;
+            var en2 = db.Entry(car);
+
+            en.State = EntityState.Unchanged;
+            car.Name = "918";
+            //  en.Property("Name").IsModified = true;
+
+            db.SaveChanges();
+
+        }
+
+
+        public void Qrcode()
+        {
+
+            string url = "http://twechat.origins.wedochina.cn/p/i/10000083";
+          var   options = new QrCodeEncodingOptions
+            {
+                DisableECI = true,
+                CharacterSet = "UTF-8",
+                Width = 300,
+                Height = 300, Margin = 15
+            };
+           var  writer = new BarcodeWriter();
+            writer.Format = BarcodeFormat.QR_CODE;
+            writer.Options = options;
+           var img= writer.Write(url);
+            img.Save("e:\\1.png");
+        }
+
+
     }
 }

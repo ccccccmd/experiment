@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using EFTest.Models;
+using StackExchange.Profiling.EntityFramework6;
 
 namespace EFTest
 {
@@ -20,10 +21,10 @@ namespace EFTest
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           // modelBuilder.Entity<Users>()
+            // modelBuilder.Entity<Users>()
             //    .HasOptional( c=>c.InterestCar ).WithOptionalDependent().Map(c=>c.MapKey("InterestCarId"));
-
          
+
             base.OnModelCreating(modelBuilder);
         }
     }
