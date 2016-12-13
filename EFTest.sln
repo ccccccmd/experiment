@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Con", "Redis.Con\Redi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cacheing", "Cacheing\Cacheing.csproj", "{54A0D08D-AE67-4703-8D55-68C71C79F249}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{9CE71411-1DBB-46C3-A91E-BD460E53ECF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{54A0D08D-AE67-4703-8D55-68C71C79F249}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54A0D08D-AE67-4703-8D55-68C71C79F249}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54A0D08D-AE67-4703-8D55-68C71C79F249}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CE71411-1DBB-46C3-A91E-BD460E53ECF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CE71411-1DBB-46C3-A91E-BD460E53ECF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CE71411-1DBB-46C3-A91E-BD460E53ECF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CE71411-1DBB-46C3-A91E-BD460E53ECF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

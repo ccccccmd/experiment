@@ -16,6 +16,7 @@ namespace Cacheing
 
         public void Clear(string pattern)
         {
+            
             throw new NotImplementedException();
         }
 
